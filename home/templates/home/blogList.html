@@ -1,0 +1,144 @@
+{% extends "homeIndex.html" %}
+
+<!-- TITLE -->
+{% block PageTitle %}
+
+{% endblock PageTitle %}
+
+
+<!-- HEAD -->
+{% block Head %}
+
+{% endblock Head %}
+
+
+<!-- BODY -->
+{% block Content %}
+<main class="container mt-4">
+
+
+  <div class="row g-5">
+      <div class="col-md-9">
+        
+
+        {% if blogs %}
+          {% for blog in blogs %}
+            <!-- KOPYALANACAK BLOG YAZISI --------------------- -->
+            <div class="card-transparent mt-3" style="max-width: 900px;">
+              <div class="row g-0">
+                  <!-- IMAGE -->
+                  <div class="col-sm-5">
+                      <img src="{{blog.image.url}}" class="card-img-top h-100 rounded" alt="">
+                  </div>
+                  <!-- INFO -->
+                  <div class="col-sm-7">
+                    <div class="card-body mx-3">
+                        <h5 class="card-title mt-1">
+                          <a class="underline text-light" href="{% url 'blogText' blog.slug %}">{{ blog.title }}</a>
+                        </h5>
+                        <p class="card-text mt-3 text-secondary">{{ blog.summary }}</p>
+                        <div style="display:flex">
+                          <strong class="d-inline-block text-success my-auto" style="font-size:90%">{{ blog.categorys }}</strong>
+                          <p class="d-inline-block text-secondary mx-3 my-auto" style="font-size:75%">{{ blog.date|timesince }} önce</p>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>  
+            <hr>
+            <!-- KOPYALANACAK BLOG YAZISI -------------------------- -->
+          {% endfor %}  
+          
+          
+          <!-- SAYFALAMA BUTONLARI --------------------------------------------- -->
+            {% if blogs.paginator.num_pages > 1 %}
+            <ul class="pagination mt-4 justify-content-center">
+              <!-- GERİ BUTONU -->
+              {% if blogs.has_previous %}
+                <li class="page-item">
+                  <a class="page-link  bg-transparent" href="?page={{ blogs.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+              {% else %} 
+                <li class="page-item disabled">
+                  <a class="page-link  bg-transparent" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+              {% endif %}
+
+              <!-- SAYFALAR BUTONU -->
+              {% for i in blogs.paginator.page_range %}
+                  {% if blogs.number == i %}
+                    <li class="page-item disabled bg-dark"><a class="page-link  bg-transparent" href="#">{{ i }}</a></li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link  bg-transparent" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+              {% endfor %}
+
+              <!-- İLERİ BUTONU -->
+              {% if blogs.has_next %}
+                <li class="page-item">
+                  <a class="page-link  bg-transparent" href="?page={{ blogs.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+              {% else %} 
+                <li class="page-item disabled">
+                  <a class="page-link  bg-transparent" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+              {% endif %}
+              </ul>              
+        {% endif %}
+
+        <!-- UP TO PAGE -->
+        <nav class="blog-pagination container text-center" aria-label="Pagination">
+          <a class="btn btn-outline-primary" href="#">UP TO PAGE</a>
+        </nav>       
+
+        {% else %}
+          <br><br>
+          <h2 class="text-center text-secondary">Burası boş gözüküyor.</h2>
+          <br><hr><br>
+          <h3 class="text-center text-white">Beğenebileceğin Yazılar</h3>
+        {% endif %}
+  
+
+    </div>
+  
+
+    <!-- RIGHT BAR -->
+    <div class="col-md-3">
+
+        <div class="position-sticky" style="top: 2rem;">
+
+            <!-- Popüler -->
+            <div class=" mb-2">
+                <h4 class="fst-italic text-white">Popüler</h4>
+                <ul class="list-unstyled">
+                  {% if popBlogs %}
+                    {% for popBlog in popBlogs %}
+                    <li class="text-center mt-2 bg-transparent rounded" style="white-space: normal;">
+                      <div class="card mb-2 bg-transparent text-white">
+                        <img class="card-img-top" src="{{popBlog.image.url}}" alt="Card image cap">
+                        <div class="card-body">
+                          <p class="card-title">
+                            <a class="underline text-light" style="font-size: 18px;" href="{% url 'blogText' popBlog.slug %}">{{ popBlog.title }}</a>
+                          </p>
+                        </div>                    
+                      </li>   
+                  {% endfor %}
+                {% endif %}
+                </ul>
+            </div>
+            <!-- Kategoriler -->
+            <div class="">
+                <h4 class="fst-italic text-white">Kategoriler</h4>
+                <ol class="list-unstyled">
+                  <ul class="list">
+                  {% for category in categorys %}
+                    <li><a class="dropdown-item text-secondary" href="{% url 'categoryList' category.slug %}">{{ category.name }}</a></li>
+                  {% endfor %}
+                  </ul>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+
+  </div>
+  
+</main>
+{% endblock Content %}

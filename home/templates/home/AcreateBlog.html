@@ -1,0 +1,35 @@
+{% extends "homeIndex.html" %}
+
+<!-- TITLE -->
+{% block PageTitle %}
+● Haber Ekle
+{% endblock PageTitle %}
+
+
+<!-- HEAD -->
+{% block Head %}
+
+{% endblock Head %}
+
+
+<!-- BODY -->
+{% block Content %}
+
+<div class="container text-white mt-4">
+
+        <form action="{% url 'create_news' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <div class="d-flex justify-content-center mt-5">
+                <button type="submit"
+                        class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Kaydet
+                </button>
+                </div>
+
+                </div>
+
+        </form>
+
+</div>
+
+{% endblock Content %}

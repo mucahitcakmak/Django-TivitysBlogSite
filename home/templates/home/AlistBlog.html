@@ -1,0 +1,100 @@
+{% extends "homeIndex.html" %}
+
+<!-- TITLE -->
+{% block PageTitle %}
+● Haberler
+{% endblock PageTitle %}
+
+
+<!-- HEAD -->
+{% block Head %}
+
+{% endblock Head %}
+
+
+<!-- BODY -->
+{% block Content %}
+
+<div class="container text-white mt-4">
+
+    <table class="table text-white">
+
+        <thead class="text-secondary">
+            <tr>
+                <th style="width: 200px;">Image</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Categories</th>
+                <th style="width: 70px;">Operations</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for blog in blogs %}
+              <tr>
+                <td>
+                    <img src="{{blog.image.url}}" class="card-img-top h-100 rounded" alt="">
+                </td>
+                <td>{{blog.title}}</td>
+                <td>{{blog.slug}}</td>
+                <td>
+                    <strong class="d-inline-block text-success my-auto" style="font-size:90%">{{ blog.categorys }}</strong>
+                </td>
+                <td>
+                    <div class="text-center">
+                        <a href="{% url 'news_edit' blog.id %}" class="btn btn-primary btn-sm mt-2">Düzenle</a>
+                        <a href="{% url 'news_delete' blog.id %}" class="btn btn-danger btn-sm mt-3">Sil</a>
+                    </div>
+
+                </td>
+
+              </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+
+          <!-- SAYFALAMA BUTONLARI --------------------------------------------- -->
+          {% if blogs.paginator.num_pages > 1 %}
+          <ul class="pagination mt-4 justify-content-center">
+            <!-- GERİ BUTONU -->
+            {% if blogs.has_previous %}
+              <li class="page-item">
+                <a class="page-link  bg-transparent" href="?page={{ blogs.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+            {% else %} 
+              <li class="page-item disabled">
+                <a class="page-link  bg-transparent" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only"></span></a></li>
+            {% endif %}
+
+            <!-- SAYFALAR BUTONU -->
+            {% for i in blogs.paginator.page_range %}
+                {% if blogs.number == i %}
+                  <li class="page-item disabled bg-dark"><a class="page-link  bg-transparent" href="#">{{ i }}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link  bg-transparent" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            <!-- İLERİ BUTONU -->
+            {% if blogs.has_next %}
+              <li class="page-item">
+                <a class="page-link  bg-transparent" href="?page={{ blogs.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+            {% else %} 
+              <li class="page-item disabled">
+                <a class="page-link  bg-transparent" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only"></span></a></li>
+            {% endif %}
+            </ul>              
+      {% endif %}
+
+
+
+    <!-- UP TO PAGE -->
+    <nav class="blog-pagination container text-center" aria-label="Pagination">
+        <a class="btn btn-outline-primary" href="#">UP TO PAGE</a>
+    </nav>  
+
+
+</div>
+
+{% endblock Content %}
