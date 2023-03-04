@@ -2,7 +2,7 @@
 
 It is a website developed with django.
 
-![alt text](https://i.hizliresim.com/9mnnqrw.png)
+![alt text](https://github.com/mucahitcakmak/Django-TivitysBlogSite/blob/master/zdeleteMe/TivitysExample.png)
 
 
 ## Usage
@@ -17,7 +17,7 @@ python manage.py migrate
 ```
 
 
-#### 3- Remove the comment box in 'BlogSite/urls.py'.
+#### 3- Remove the comment line in 'BlogSite/urls.py'.
 ![alt text](https://github.com/mucahitcakmak/Django-TivitysBlogSite/blob/master/zdeleteMe/doc2.png)
 <br>
 
