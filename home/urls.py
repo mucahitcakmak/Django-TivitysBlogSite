@@ -10,6 +10,7 @@ urlpatterns = [
     path('news-edit/<int:newsId>', views.news_edit, name="news_edit"),
     path('news-delete/<int:newsId>', views.news_delete, name="news_delete"),
     path('create-news', views.create_news, name="create_news"),
+    path('create-category', views.create_category, name="create_category"),
 
     path('<slug:catSlugName>', views.categoryList, name="categoryList"),
     path('news/<slug:BlogSlugName>', views.blogText, name="blogText"),

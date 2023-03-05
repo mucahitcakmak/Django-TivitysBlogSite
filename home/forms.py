@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput, Textarea, FileInput, Select
 
-from .models import Blog
+from .models import Blog, BlogCategory
 
 class NewsCreateForm(forms.ModelForm):
     class Meta:
@@ -63,4 +63,17 @@ class NewsEditForm(forms.ModelForm):
             "summary":{
                 "required": "Bu alan boş bırakılamaz",
             }
+        }
+
+class CategoryCreateForm(forms.ModelForm):
+    class Meta:
+        model = BlogCategory
+        fields = ("name", "slug")
+        labels = {
+            "name": "Category Name",
+            "slug": "Category Slug",
+        }
+        widgets = {
+            "name": TextInput(attrs={"class":"form-control mb-5 bg-dark text-white"}),
+            "slug": TextInput(attrs={"class":"form-control mb-5 bg-dark text-white"}),
         }

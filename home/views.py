@@ -3,7 +3,7 @@ from .models import Blog
 from .models import BlogCategory
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from home.forms import NewsCreateForm, NewsEditForm
+from home.forms import NewsCreateForm, NewsEditForm, CategoryCreateForm
 from django.contrib.auth.decorators import login_required
 
 import random
@@ -152,3 +152,21 @@ def create_news(req):
     }
     return render(req, "home/AcreateBlog.html", context)
 
+@login_required()
+def create_category(req):
+    category = BlogCategory.objects.all()
+
+    if req.method == "POST":
+        form = CategoryCreateForm(req.POST, req.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = CategoryCreateForm()
+
+    context = {
+        "form": form,
+        "categorys" : category,
+    }
+    return render(req, "home/AcreateCategory.html", context)
